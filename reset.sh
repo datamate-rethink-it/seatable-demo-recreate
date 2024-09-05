@@ -89,7 +89,7 @@ ENABLED_ROLE_PERMISSIONS = {
         'can_generate_share_link': True,
         'can_invite_guest': True,
         'role_asset_quota': '1G',
-        'row_limit': 2000,
+        'row_limit': 75000,
         'can_create_common_dataset': True,
         'can_generate_external_link': True,
         'can_run_python_script': True,
@@ -169,12 +169,7 @@ ENABLE_ORG_ADMIN_INVITE_VIA_EMAIL = False
 
 # collabora
 ENABLE_COLLABORA = True
-COLLABORA_DISCOVERY_URL = 'https://${SEATABLE_URL}:6232/hosting/discovery'
-
-# später
-#ENABLE_ONLYOFFICE = True
-#ONLYOFFICE_APIJS_URL = 'https://seatable-demo.de/web-apps/apps/api/documents/api.js'
-#ONLYOFFICE_FILE_EXTENSION = ('doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'odt', 'fodt', 'odp', 'fodp', 'ods', 'fods', 'csv', 'ppsx', 'pps')
+COLLABORA_DISCOVERY_URL = '${SEATABLE_URL}:6232/hosting/discovery'
 
 # UNIVERSAL APP (wird nicht mehr benötigt)
 #ENABLE_UNIVERSAL_APP = True
@@ -211,7 +206,7 @@ echo "
 multi_tenancy = true
 " | tee -a /opt/seatable-server/seatable/conf/seafile.conf >/dev/null
 
-# restart and sleep
+# restart and sleep (necessary, otherwise auth-token is not received...)
 docker exec seatable-server /opt/seatable/scripts/seatable.sh
 sleep 30
 
@@ -246,4 +241,5 @@ healthcheck /0
 
 ## TODOS
 ## nginx konfiguration optimieren einbauen
-## kein memcached
+## kein memcached, stattdessen Redis
+## einschränkungen von nip.io: template vorschau und collabora online
