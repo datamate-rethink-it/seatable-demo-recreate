@@ -26,6 +26,10 @@ rm -r /opt/seatable-server
 rm -r /opt/mariadb
 rm -r /opt/seatable-demo-recreate/files/output/template_token.txt # da kommt der base_api_token von templates base rein...
 
+## copy certs
+mkdir -p /opt/seatable-server/certs
+cp /opt/seatable-demo-recreate/files/certs/* /opt/seatable-server/certs/
+
 ## customizing
 printf "%b(11): Customizing (Logo, Login-Background, Custom-CSS) %b\n" "$RED" "$NC"
 mkdir -p /opt/seatable-server/seatable/seahub-data/custom/

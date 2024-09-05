@@ -11,7 +11,7 @@ Current URL of this setup: https://demo.seatable.io/
 2. install git and download this repository to `/opt/` with `git clone https://github.com/datamate-rethink-it/seatable-demo-recreate.git`
 3. create `.env` file with the variables like described in env-example. Important: The admin credentials of the two .env files must match (/opt/seatable-compose/.env and /opt/seatable-demo-recreate/.env)
 4. `chmod +x /opt/seatable-demo-recreate/reset.sh`
-5. copy the four cert files for SSO to `/opt/seatable-server/certs/`
+5. save the four cert files for SSO to `/opt/seatable-demo-recreate/certs/`
 
 Also I force always to use the lastest docker images by adding this to the .env file.
 
