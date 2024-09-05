@@ -1,0 +1,9 @@
+/vendor/
+/composer.lock
+/.env
+/how-to-copy.md
+/files/plugins/*.zip
+/files/certs/*.crt
+/files/certs/*.key
+/files/certs/*.xml
+/files/output/template_token.txt

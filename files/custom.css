@@ -1,0 +1,11 @@
+/* hide data collection form */
+.form-tool.add-item-btn > .tool-popover > .tool-item:nth-child(2) {display:none;}
+/* hide abuse report */
+#header .tools .abuse {display:none;}
+/* new column selection list */
+.select-column-popover .select-column-list .select-column-title {display:none;}
+.select-column-popover .select-column-list {display:block !important;}
+.select-column-popover .select-column-list .select-column-item {width:100% !important;}
+.mobile-editor-column .select-column-container .am-list-header {display:none;}
+/* calendar plugin 100% -> should be fixed by developers in the future ... */
+.dtable-plugin.calendar-plugin-container .calendar-plugin-content {width:100% !important;}
