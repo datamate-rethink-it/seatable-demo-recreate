@@ -27,7 +27,7 @@ docker compose up -d
 
 ## wait until SeaTable is available
 TIMEOUT=120             # Total timeout duration in seconds (2 minutes)
-INTERVAL=5              # Interval between pings in seconds
+INTERVAL=10             # Interval between pings in seconds
 start_time=$(date +%s)  # start time
 
 while true; do
@@ -199,6 +199,7 @@ docker run --rm \
  -v $(pwd)/../plugins:/tmp/plugins \
  -v $(pwd)/../avatars:/tmp/avatars \
  -v $(pwd)/../output:/tmp/output \
+ -v $(pwd)/../../.env:/tmp/.env \
 php-init
 
 ## templates
