@@ -149,6 +149,10 @@ ENABLE_ORG_DEPARTMENT = False
 ENABLE_ORG_COMMON_DATASET = True
 ENABLE_ORG_ADMIN_INVITE_VIA_EMAIL = False
 
+# collabora
+ENABLE_COLLABORA = True
+COLLABORA_DISCOVERY_URL = 'https://${SEATABLE_URL}:6232/hosting/discovery'
+
 # später
 #ENABLE_ONLYOFFICE = True
 #ONLYOFFICE_APIJS_URL = 'https://seatable-demo.de/web-apps/apps/api/documents/api.js'
@@ -217,8 +221,5 @@ ENABLE_CREATE_BASE_FROM_TEMPLATE = True
 docker exec seatable-server /opt/seatable/scripts/seatable.sh
 
 ## healthcheck einbauen
-## passwörter aus github repo in .env-dist
-## onlyoffice/collabora noch einbauen
-## sso certificate in container mounten
 ## nginx konfiguration optimieren einbauen
 ## kein memcached
