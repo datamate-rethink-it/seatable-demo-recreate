@@ -10,15 +10,15 @@ docker compose down --remove-orphans
 ## remove old stuff
 rm -r /opt/seatable-server
 rm -r /opt/mariadb
-rm -r /opt/daily-reset/files/output/template_token.txt # da kommt der base_api_token von templates base rein...
+rm -r /opt/seatable-demo-recreate/files/output/template_token.txt # da kommt der base_api_token von templates base rein...
 
 ## customizing
 printf "%b(11): Customizing (Logo, Login-Background, Custom-CSS) %b\n" "$RED" "$NC"
 mkdir -p /opt/seatable-server/seatable/seahub-data/custom/
 cp -t /opt/seatable-server/seatable/seahub-data/custom/ \
-  /opt/daily-reset/files/mylogo.png \
-  /opt/daily-reset/files/login-bg.jpg \
-  /opt/daily-reset/files/custom.css \
+  /opt/seatable-demo-recreate/files/mylogo.png \
+  /opt/seatable-demo-recreate/files/login-bg.jpg \
+  /opt/seatable-demo-recreate/files/custom.css \
   || exit 1
 
 ## restart
@@ -191,7 +191,7 @@ multi_tenancy = true
 
 # create users
 printf "%b(10): create all users %b\n" "$RED" "$NC"
-/opt/daily-reset/files/init_docker
+/opt/seatable-demo-recreate/files/init_docker
 docker build --no-cache -t php-init .
 docker run --rm \
  -v $(pwd)/createOrgsTemplatesPlugins.php:/app/createOrgsTemplatesPlugins.php \
@@ -202,7 +202,7 @@ docker run --rm \
 php-init
 
 ## templates
-source /opt/daily-reset/files/output/template_token.txt
+source /opt/seatable-demo-recreate/files/output/template_token.txt
 echo "
 # Templates
 SHOW_TEMPLATES_LINK = True
