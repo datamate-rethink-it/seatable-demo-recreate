@@ -191,7 +191,7 @@ multi_tenancy = true
 
 # create users
 printf "%b(10): create all users %b\n" "$RED" "$NC"
-/opt/seatable-demo-recreate/files/init_docker
+cd /opt/seatable-demo-recreate/files/init_docker
 docker build --no-cache -t php-init .
 docker run --rm \
  -v $(pwd)/createOrgsTemplatesPlugins.php:/app/createOrgsTemplatesPlugins.php \
