@@ -3,6 +3,20 @@
 ## get passwords
 source ./.env
 
+healthcheck() {
+    suffix=$1
+    if [ -n "$HEALTHCHECK_URL" ]; then
+        curl -fSsL --retry 3 -X POST \
+            --user-agent "seatable-restic/1.0.0" \
+            --data-raw "seatable-demo" "${HEALTHCHECK_URL}${suffix}"
+        if [ $? != 0 ]; then
+            exit 1
+        fi
+    fi
+}
+
+healthcheck /start
+
 ## stop old containers
 cd /opt/seatable-compose
 docker compose down --remove-orphans
@@ -193,6 +207,10 @@ echo "
 multi_tenancy = true
 " | tee -a /opt/seatable-server/seatable/conf/seafile.conf >/dev/null
 
+# restart and sleep
+docker exec seatable-server /opt/seatable/scripts/seatable.sh
+sleep 30
+
 # create users
 printf "%b(10): create all users %b\n" "$RED" "$NC"
 cd /opt/seatable-demo-recreate/files/init_docker
@@ -220,6 +238,8 @@ ENABLE_CREATE_BASE_FROM_TEMPLATE = True
 ## final restart
 docker exec seatable-server /opt/seatable/scripts/seatable.sh
 
-## healthcheck einbauen
+healthcheck /0
+
+## TODOS
 ## nginx konfiguration optimieren einbauen
 ## kein memcached

@@ -9,7 +9,7 @@ Current URL of this setup: https://demo.seatable.io/
 
 1. Install standard SeaTable Server on a server with python pipeline
 2. install git and download this repository to `/opt/` with `git clone https://github.com/datamate-rethink-it/seatable-demo-recreate.git`
-3. create `.env` file with the variables like described in env-example
+3. create `.env` file with the variables like described in env-example. Important: The admin credentials of the two .env files must match (/opt/seatable-compose/.env and /opt/seatable-demo-recreate/.env)
 4. `chmod +x /opt/seatable-demo-recreate/reset.sh`
 5. copy the four cert files for SSO to `/opt/seatable-server/certs/`
 
@@ -29,4 +29,11 @@ Create a cronjob that simply executes /opt/daily-reset/reset.sh like
 
 ```
 59 1 * * * /opt/daily-reset/reset.sh
+```
+
+## How to update on the server
+
+```
+cd /opt/seatable-demo-recreate/
+git pull
 ```
