@@ -206,6 +206,9 @@ echo "
 multi_tenancy = true
 " | tee -a /opt/seatable-server/seatable/conf/seafile.conf >/dev/null
 
+## replace nginx.conf (to enable ipv6 and enable api.seatable.io requests.)
+cp /opt/seatable-demo-recreate/files/nginx.conf /opt/seatable-server/seatable/conf/nginx.conf
+
 # restart and sleep (necessary, otherwise auth-token is not received...)
 docker exec seatable-server /opt/seatable/scripts/seatable.sh
 sleep 30
@@ -240,6 +243,5 @@ docker exec seatable-server /opt/seatable/scripts/seatable.sh
 healthcheck /0
 
 ## TODOS
-## nginx konfiguration optimieren einbauen
 ## kein memcached, stattdessen Redis
 ## einschränkungen von nip.io: template vorschau und collabora online
