@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## get passwords
-source ./.env
+source /opt/seatable-demo-recreate/.env
 
 healthcheck() {
     suffix=$1
@@ -49,11 +49,11 @@ INTERVAL=10             # Interval between pings in seconds
 start_time=$(date +%s)  # start time
 
 while true; do
-  if curl --head --silent --fail "${SEATABLE_URL}/dtable-server/ping/" > /dev/null; then
-    echo "URL is available. Continuing..."
+  if curl --silent --fail "${SEATABLE_URL}/dtable-server/ping/" > /dev/null; then
+    echo "SeaTable Server is available. Continuing..."
     break
   else
-    echo "URL is not available. Checking again in $INTERVAL seconds..."
+    echo "${SEATABLE_URL} is not available. Checking again in $INTERVAL seconds..."
   fi
   current_time=$(date +%s) # Check if the timeout has been reached
   elapsed_time=$((current_time - start_time))
@@ -240,8 +240,26 @@ ENABLE_CREATE_BASE_FROM_TEMPLATE = True
 ## final restart
 docker exec seatable-server /opt/seatable/scripts/seatable.sh
 
+start_time=$(date +%s)  # start time
+while true; do
+  if curl --silent --fail "${SEATABLE_URL}/dtable-server/ping/" > /dev/null; then
+    break
+  fi
+  current_time=$(date +%s) # Check if the timeout has been reached
+  elapsed_time=$((current_time - start_time))
+
+  if [ "$elapsed_time" -ge "$TIMEOUT" ]; then
+    echo "SeaTable Server is not ready!"
+    healthcheck /fail
+    exit 1
+  fi
+  sleep "$INTERVAL" # Wait for the specified interval before retrying
+done
+
 healthcheck /0
+echo "SeaTable Server is read..."
+
 
 ## TODOS
-## kein memcached, stattdessen Redis
-## einschränkungen von nip.io: template vorschau und collabora online
+# kein memcached, stattdessen Redis
+# einschränkungen von nip.io: template vorschau und collabora online
