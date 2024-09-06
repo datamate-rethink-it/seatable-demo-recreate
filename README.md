@@ -29,7 +29,7 @@ PYTHON_RUNNER_IMAGE='seatable/seatable-python-runner:latest'
 Create a cronjob that simply executes /opt/seatable-demo-recreate/reset.sh like
 
 ```
-59 1 * * * /opt/seatable-demo-recreate/reset.sh
+59 1 * * * /opt/seatable-demo-recreate/reset.sh > /opt/reset.log
 ```
 
 ## How to update on the server
