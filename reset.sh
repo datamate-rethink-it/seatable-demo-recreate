@@ -225,6 +225,9 @@ docker run --rm \
  -v $(pwd)/../output:/tmp/output \
  -v $(pwd)/../../.env:/tmp/.env \
 php-init
+# clean up
+docker image prune -a --force
+
 
 ## templates
 source /opt/seatable-demo-recreate/files/output/template_token.txt
