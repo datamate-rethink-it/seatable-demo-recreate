@@ -68,7 +68,7 @@ done
 ## update dtable_web_settings.py
 printf "%b(7): add seatable configuration %b\n" "$RED" "$NC"
 echo "
-HELP_LINK = 'https://seatable.io/docs/'
+HELP_LINK = 'https://docs.seatable.com'
 BRANDING_CSS = 'custom/custom.css'
 SEND_EMAIL_ON_ADDING_SYSTEM_MEMBER = False
 
@@ -176,7 +176,7 @@ COLLABORA_DISCOVERY_URL = '${SEATABLE_URL}:6232/hosting/discovery'
 
 # SAML
 ENABLE_SAML = True
-SAML_REMOTE_METADATA_URL = 'https://auth.seatable.io/api/v3/providers/saml/19/metadata/?download'
+SAML_REMOTE_METADATA_URL = 'https://auth.seatable.com/api/v3/providers/saml/19/metadata/?download'
 SAML_PROVIDER_IDENTIFIER = 'Authentik'
 SAML_ATTRIBUTE_MAP = {
     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn': 'uid',
@@ -191,8 +191,8 @@ EMAIL_HOST = '${EMAIL_HOST}'
 EMAIL_HOST_USER = '${EMAIL_HOST_USER}'
 EMAIL_HOST_PASSWORD = '${EMAIL_HOST_PASSWORD}'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'SeaTable <no-reply@seatable.io>'
-SERVER_EMAIL = 'no-reply@seatable.io'
+DEFAULT_FROM_EMAIL = 'SeaTable <no-reply@seatable.com>'
+SERVER_EMAIL = 'no-reply@seatable.com'
 
 # User management
 ENABLE_DELETE_ACCOUNT = False
@@ -225,6 +225,8 @@ docker run --rm \
  -v $(pwd)/../output:/tmp/output \
  -v $(pwd)/../../.env:/tmp/.env \
 php-init
+# clean up
+docker image prune -a --force
 
 ## templates
 source /opt/seatable-demo-recreate/files/output/template_token.txt

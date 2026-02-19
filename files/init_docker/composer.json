@@ -1,5 +1,5 @@
 {
   "require": {
-    "seatable/seatable-api-php": "*"
+    "seatable/seatable-api-php": "5.2.7"
   }
 }
