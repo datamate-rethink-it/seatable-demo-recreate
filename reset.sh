@@ -187,6 +187,9 @@ SAML_CERTS_DIR = '/shared/certs/'
 ENABLE_DELETE_ACCOUNT = False
 ENABLE_UPDATE_USER_INFO = False    # nicht dokumentiert
 ENABLE_CHANGE_PASSWORD = False   # ldap darf sowieso nie ändern, normale dürfen immer. scheint nicht konfigurierbar zu sein.
+
+ENABLE_UNIVERSAL_APP_HTML_PAGES = True
+DTABLE_HTML_PAGES_SERVER_URL = 'https://${SEATABLE_URL}/app-server/'
 " | tee -a /opt/seatable-server/seatable/conf/dtable_web_settings.py >/dev/null
 
 ## update seafile.conf
@@ -219,7 +222,9 @@ source /opt/seatable-demo-recreate/files/output/template_token.txt
 sed -i "s/SEATABLE_TEMPLATE_BASE_API_TOKEN=.*/SEATABLE_TEMPLATE_BASE_API_TOKEN=${TEMPLATE_TOKEN}/" /opt/seatable-compose/.env
 
 ## final restart
-docker exec seatable-server /opt/seatable/scripts/seatable.sh
+#docker exec seatable-server /opt/seatable/scripts/seatable.sh
+cd /opt/seatable-compose
+docker compose up -d
 
 start_time=$(date +%s)  # start time
 while true; do
