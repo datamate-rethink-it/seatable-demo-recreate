@@ -183,9 +183,6 @@ SAML_ATTRIBUTE_MAP = {
 }
 SAML_CERTS_DIR = '/shared/certs/'
 
-# EMAIL
-# => configured via env since 6.2
-
 # User management
 ENABLE_DELETE_ACCOUNT = False
 ENABLE_UPDATE_USER_INFO = False    # nicht dokumentiert
@@ -197,10 +194,6 @@ echo "
 [general]
 multi_tenancy = true
 " | tee -a /opt/seatable-server/seatable/conf/seafile.conf >/dev/null
-
-## replace nginx.conf (to enable ipv6 and enable api.seatable.io requests.)
-# cp /opt/seatable-demo-recreate/files/nginx.conf /opt/seatable-server/seatable/conf/nginx.conf
-# => not necessary with 6.2
 
 # restart and sleep (necessary, otherwise auth-token is not received...)
 docker exec seatable-server /opt/seatable/scripts/seatable.sh
@@ -224,15 +217,6 @@ docker image prune -a --force
 ## templates (jetzt per env)
 source /opt/seatable-demo-recreate/files/output/template_token.txt
 sed -i "s/SEATABLE_TEMPLATE_BASE_API_TOKEN=.*/SEATABLE_TEMPLATE_BASE_API_TOKEN=${TEMPLATE_TOKEN}/" /opt/seatable-compose/.env
-
-# so geht das leider nicht mehr... (env variablen...)
-#echo "
-## Templates
-#SHOW_TEMPLATES_LINK = True
-#TEMPLATE_BASE_API_TOKEN = '${TEMPLATE_TOKEN}'
-#TEMPLATE_TABLE_NAME = 'templates'
-#ENABLE_CREATE_BASE_FROM_TEMPLATE = True
-#" | tee -a /opt/seatable-server/seatable/conf/dtable_web_settings.py >/dev/null
 
 ## final restart
 docker exec seatable-server /opt/seatable/scripts/seatable.sh
