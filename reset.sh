@@ -79,6 +79,7 @@ ORG_MEMBER_QUOTA_ENABLED = True
 ORG_MEMBER_QUOTA_DEFAULT = 25
 ENABLE_SIGNUP = False
 ENABLE_USER_TO_SET_NUMBER_SEPARATOR = True
+ENABLE_ABUSE_REPORT = False
 
 # ROLES AND PERMISSIONS
 ENABLED_ROLE_PERMISSIONS = {
@@ -171,9 +172,6 @@ ENABLE_ORG_ADMIN_INVITE_VIA_EMAIL = False
 ENABLE_COLLABORA = True
 COLLABORA_DISCOVERY_URL = '${SEATABLE_URL}:6232/hosting/discovery'
 
-# UNIVERSAL APP (wird nicht mehr benötigt)
-#ENABLE_UNIVERSAL_APP = True
-
 # SAML
 ENABLE_SAML = True
 SAML_REMOTE_METADATA_URL = 'https://auth.seatable.com/api/v3/providers/saml/19/metadata/?download'
@@ -186,13 +184,7 @@ SAML_ATTRIBUTE_MAP = {
 SAML_CERTS_DIR = '/shared/certs/'
 
 # EMAIL
-EMAIL_USE_TLS = True
-EMAIL_HOST = '${EMAIL_HOST}'
-EMAIL_HOST_USER = '${EMAIL_HOST_USER}'
-EMAIL_HOST_PASSWORD = '${EMAIL_HOST_PASSWORD}'
-EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'SeaTable <no-reply@seatable.com>'
-SERVER_EMAIL = 'no-reply@seatable.com'
+# => configured via env since 6.2
 
 # User management
 ENABLE_DELETE_ACCOUNT = False
@@ -207,7 +199,8 @@ multi_tenancy = true
 " | tee -a /opt/seatable-server/seatable/conf/seafile.conf >/dev/null
 
 ## replace nginx.conf (to enable ipv6 and enable api.seatable.io requests.)
-cp /opt/seatable-demo-recreate/files/nginx.conf /opt/seatable-server/seatable/conf/nginx.conf
+# cp /opt/seatable-demo-recreate/files/nginx.conf /opt/seatable-server/seatable/conf/nginx.conf
+# => not necessary with 6.2
 
 # restart and sleep (necessary, otherwise auth-token is not received...)
 docker exec seatable-server /opt/seatable/scripts/seatable.sh
@@ -228,16 +221,18 @@ php-init
 # clean up
 docker image prune -a --force
 
-## templates
+## templates (jetzt per env)
 source /opt/seatable-demo-recreate/files/output/template_token.txt
-echo "
-# Templates
-SHOW_TEMPLATES_LINK = True
-TEMPLATE_BASE_API_TOKEN = '${TEMPLATE_TOKEN}'
-TEMPLATE_TABLE_NAME = 'templates'
-ENABLE_CREATE_BASE_FROM_TEMPLATE = True
-" | tee -a /opt/seatable-server/seatable/conf/dtable_web_settings.py >/dev/null
+sed -i "s/SEATABLE_TEMPLATE_BASE_API_TOKEN=.*/SEATABLE_TEMPLATE_BASE_API_TOKEN=${TEMPLATE_TOKEN}/" /opt/seatable-compose/.env
 
+# so geht das leider nicht mehr... (env variablen...)
+#echo "
+## Templates
+#SHOW_TEMPLATES_LINK = True
+#TEMPLATE_BASE_API_TOKEN = '${TEMPLATE_TOKEN}'
+#TEMPLATE_TABLE_NAME = 'templates'
+#ENABLE_CREATE_BASE_FROM_TEMPLATE = True
+#" | tee -a /opt/seatable-server/seatable/conf/dtable_web_settings.py >/dev/null
 
 ## final restart
 docker exec seatable-server /opt/seatable/scripts/seatable.sh
@@ -261,7 +256,3 @@ done
 healthcheck /0
 echo "SeaTable Server is read..."
 
-
-## TODOS
-# kein memcached, stattdessen Redis
-# einschränkungen von nip.io: template vorschau und collabora online
