@@ -24,7 +24,7 @@ docker compose down --remove-orphans
 ## remove old stuff
 rm -r /opt/seatable-server
 rm -r /opt/mariadb
-rm -r /opt/seatable-demo-recreate/files/output/template_token.txt # da kommt der base_api_token von templates base rein...
+rm -f /opt/seatable-demo-recreate/files/output/template_token.txt # da kommt der base_api_token von templates base rein...
 
 ## copy certs
 mkdir -p /opt/seatable-server/certs
@@ -49,7 +49,7 @@ INTERVAL=10             # Interval between pings in seconds
 start_time=$(date +%s)  # start time
 
 while true; do
-  if curl --silent --fail "${SEATABLE_URL}/dtable-server/ping/" > /dev/null; then
+  if curl --silent --fail "${SEATABLE_URL}/api2/ping/" > /dev/null; then
     echo "SeaTable Server is available. Continuing..."
     break
   else
