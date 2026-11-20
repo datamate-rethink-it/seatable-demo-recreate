@@ -182,6 +182,7 @@ SAML_ATTRIBUTE_MAP = {
     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': 'name',
 }
 SAML_CERTS_DIR = '/shared/certs/'
+SAML_METADATA_ALLOW_UNSIGNED = True
 
 # User management
 ENABLE_DELETE_ACCOUNT = False
@@ -228,7 +229,7 @@ docker compose up -d
 
 start_time=$(date +%s)  # start time
 while true; do
-  if curl --silent --fail "${SEATABLE_URL}/dtable-server/ping/" > /dev/null; then
+  if curl --silent --fail "${SEATABLE_URL}/api2/ping/" > /dev/null; then
     break
   fi
   current_time=$(date +%s) # Check if the timeout has been reached
